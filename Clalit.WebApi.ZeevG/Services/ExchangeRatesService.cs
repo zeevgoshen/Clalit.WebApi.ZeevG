@@ -12,7 +12,7 @@ namespace Clalit.WebApi.ZeevG.Services
         private string url = "https://boi.org.il/PublicApi/GetExchangeRates?asXML=true";
         private List<ExchangeRateResponseDTO> results = new List<ExchangeRateResponseDTO>();
 
-        public async Task<IEnumerable<ExchangeRateResponseDTO>> GetExchangeRatesAsync()
+        public async Task<IEnumerable<ExchangeRateResponseDTO>?> GetExchangeRatesAsync()
         {
             try
             {
