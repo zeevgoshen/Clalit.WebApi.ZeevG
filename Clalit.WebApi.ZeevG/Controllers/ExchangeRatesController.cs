@@ -12,7 +12,6 @@ namespace Clalit.WebApi.ZeevG.Controllers
         private readonly IExchangeRatesService service;
 
         public ExchangeRatesController(
-            ILogger<WeatherForecastController> logger,
             IExchangeRatesService service)
         {
             this.service = service;

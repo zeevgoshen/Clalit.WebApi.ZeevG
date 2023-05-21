@@ -3,6 +3,7 @@ using Newtonsoft.Json;
 using System.Net.Http.Headers;
 using System.Xml;
 using System.Xml.Linq;
+using System.Linq;
 
 namespace Clalit.WebApi.ZeevG.Services
 {
@@ -43,16 +44,13 @@ namespace Clalit.WebApi.ZeevG.Services
             var xmldoc = new XmlDocument();
             xmldoc.LoadXml(dataObjects);
 
-            var fromXml = JsonConvert.SerializeXmlNode((XmlElement)xmldoc.DocumentElement.ChildNodes[0]);
+            var elem = xmldoc?.DocumentElement?.ChildNodes[0];
+            var fromXml = JsonConvert.SerializeXmlNode(elem);
             var fromJson = JsonConvert.DeserializeObject<ExchangeRatesResponseCollectioDTO>(fromXml);
 
-            foreach (var node in fromJson.ExchangeRates.ExchangeRateResponseDTO)
-            {
-                if (node.CurrentChange < 0)
-                {
-                    results.Add(node);
-                }
-            }
+            results.AddRange(from node in fromJson?.ExchangeRates?.ExchangeRateResponseDTO
+                             where node.CurrentChange < 0
+                             select node);
         }
 
         private HttpClient InitializeClient(string url)
